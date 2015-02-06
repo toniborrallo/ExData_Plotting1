@@ -1,5 +1,21 @@
 ## This file is for loading the large dataset.
-data <- read.table(file ="./data/household_power_consumption.txt",
+
+## Create directory "data" if not exists
+if (!file.exists("data")) {
+  dir.create("data")
+}
+
+## Download&unzip dataset if no exists
+if (!file.exists("data/household_power_consumption.txt")) {
+  if(!file.exists("data/household_power_consumption.zip")) {
+    fileURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+    download.file(fileURL, destfile = "data/household_power_consumption.zip")
+  }
+  unzip(zipfile = "data/household_power_consumption.zip", exdir = "data")
+}
+
+# Load dataset
+data <- read.table(file ="data/household_power_consumption.txt",
                    header = TRUE,
                    sep = ";",
                    colClasses = c("character", "character", rep("numeric",7)),
